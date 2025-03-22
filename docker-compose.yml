@@ -1,0 +1,45 @@
+
+services:
+  ecart-api:
+    build:
+      context: .
+      dockerfile: apps/auth/Dockerfile
+      target: development
+    command: pnpm run start:dev:auth
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - mongo
+
+  auth:
+    build:
+      context: .
+      dockerfile: apps/garage-api/Dockerfile
+      target: development
+    command: pnpm run start:dev:garage-api
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    container_name: mongo_db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

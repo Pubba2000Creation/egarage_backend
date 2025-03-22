@@ -1,0 +1,30 @@
+# Use Node Alpine as the base image for development
+FROM node:alpine as development
+
+# Set the Working Directory
+WORKDIR /usr/src/app
+
+# Copy Package Files and Install Dependencies
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install -g && pnpm install
+
+# Copy the Application Code
+COPY . .
+
+# Create a Production Image
+RUN pnpm run build
+
+# Create a production image
+FROM node:alpine as production
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+WORKDIR /usr/src/app
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --only=production
+
+# Copy Files from the Development Stage
+COPY --from=development /usr/src/app/dist ./dist
+COPY --from=development /usr/src/app/package.json ./package.json
+
+# Expose the Port and Set the Command
+CMD [ "node", "dist/apps/auth/main.js" ]
