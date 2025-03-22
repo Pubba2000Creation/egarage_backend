@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "outDir": "../../dist/apps/garage-api"
+  },
+  "include": ["src/**/*", "libs/common/src/email/template/**/*"],
+
+  "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
+}
