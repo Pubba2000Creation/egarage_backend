@@ -1,26 +1,32 @@
 # 1️⃣ Base Image
-FROM node:20 as base
+FROM node:20 AS base
 
 # 2️⃣ Set the working directory inside the container
 WORKDIR /app
 
-# 3️⃣ Copy package.json, pnpm-lock.yaml, and workspace settings
+# 3️⃣ Install pnpm version 9.12.1 globally
+RUN npm install -g pnpm@9.12.1
+
+# 4️⃣ Install NestJS CLI globally
+RUN npm install -g @nestjs/cli
+
+#copy env file
+# Copy the .env file into the container
+COPY .env .env
+# 5️⃣ Copy package.json, pnpm-lock.yaml, and workspace settings
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# 4️⃣ Install pnpm globally
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# 6️⃣ Install dependencies (Only production)
+RUN pnpm install --frozen-lockfile
 
-# 5️⃣ Install dependencies (Only production)
-RUN pnpm install --frozen-lockfile --prod
-
-# 6️⃣ Copy the entire project (excluding files in .dockerignore)
+# 7️⃣ Copy the entire project (excluding files in .dockerignore)
 COPY . .
 
-# 7️⃣ Build the application
+# 8️⃣ Build the application
 RUN pnpm build
 
-# 8️⃣ Expose the required ports
-EXPOSE 3000 3001
+# 9️⃣ Expose the required ports
+EXPOSE 3000 3001 3002
 
-# 9️⃣ Start both services using PM2 (for process management)
-CMD ["pnpm", "start:all"]
+# 🔟 Start both services using PM2 (for process management)
+CMD ["pnpm", "run", "start"]

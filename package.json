@@ -12,7 +12,6 @@
     "start": "node dist/apps/main.js",
     "build": "nest build",
     "postbuild": "cp -R libs/common/src/email/template dist/libs/common/src/email/template/",
-    "heroku-postbuild": "pnpm install --recursive && pnpm build && pnpm postbuild",
     "build:auth": "nest build auth",
     "build:garage-api": "nest build garage-api",
     "format": "prettier --write \"**/*.{js,ts,json,md,html,css,scss,yml}\"",
