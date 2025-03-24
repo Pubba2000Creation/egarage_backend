@@ -29,26 +29,7 @@ jobs:
     # Step 4: Build and push Docker image to DigitalOcean Container Registry
     - name: Build and push Docker image
       run: |
-        docker build --pull \
-          --platform linux/amd64 \
-          --build-arg APP_ENV=${{ secrets.APP_ENV }} \
-          --build-arg PORT=${{ secrets.PORT }} \
-          --build-arg MONGODB_URI=${{ secrets.MONGODB_URI }} \
-          --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} \
-          --build-arg JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }} \
-          --build-arg JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }} \
-          --build-arg JWT_REFRESH_EXPIRES_IN=${{ secrets.JWT_REFRESH_EXPIRES_IN }} \
-          --build-arg MAIL_HOST=${{ secrets.MAIL_HOST }} \
-          --build-arg MAIL_PORT=${{ secrets.MAIL_PORT }} \
-          --build-arg MAIL_USER=${{ secrets.MAIL_USER }} \
-          --build-arg MAIL_SERVICE=${{ secrets.MAIL_SERVICE }} \
-          --build-arg MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }} \
-          --build-arg MAIL_FROM=${{ secrets.MAIL_FROM }} \
-          --build-arg AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-          --build-arg AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-          --build-arg AWS_REGION=${{ secrets.AWS_REGION }} \
-          --build-arg AWS_S3_BUCKET_NAME=${{ secrets.AWS_S3_BUCKET_NAME }} \
-          -t registry.digitalocean.com/developmentofcustom/e-garage-backend:latest .
+        docker build --pull --platform linux/amd64 -t registry.digitalocean.com/developmentofcustom/e-garage-backend:latest .
         docker push registry.digitalocean.com/developmentofcustom/e-garage-backend:latest
 
     # Step 5: SSH into the Droplet and deploy
