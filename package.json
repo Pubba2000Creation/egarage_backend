@@ -8,7 +8,7 @@
     "start:all": "concurrently \"pnpm run start:garage-api\" \"pnpm run start:auth\"",
     "start:dev:auth": "nest start auth --watch",
     "start:dev:garage-api": "nest start garage-api --watch",
-    "start:dev:all": "node ./dist/apps/main",
+    "start:dev:all": "concurrently \"pnpm run start:dev:garage-api\" \"pnpm run start:dev:auth\"",
     "start": "node dist/apps/main.js",
     "build": "nest build",
     "postbuild": "cp -R libs/common/src/email/template dist/libs/common/src/email/template/",

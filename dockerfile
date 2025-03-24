@@ -30,3 +30,9 @@ EXPOSE 3000 3001 3002
 
 # 🔟 Start both services using PM2 (for process management)
 CMD ["pnpm", "run", "start"]
+
+
+
+#build command :- docker build -t e-garage-backend .
+
+#run command :- docker run -d -p 3000:3000 e-garage-backend
