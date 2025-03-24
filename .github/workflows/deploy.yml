@@ -39,6 +39,7 @@ jobs:
         host: ${{ secrets.DROPLET_IP }}
         username: root
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+        debug: true  # Add this for more detailed SSH connection logs
         script: |
           docker pull registry.digitalocean.com/developmentofcustom/e-garage-backend:latest
           docker stop e-garage-backend || true
