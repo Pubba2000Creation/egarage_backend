@@ -33,7 +33,7 @@ jobs:
         docker push registry.digitalocean.com/developmentofcustom/e-garage-backend:latest
 
     # Step 5: SSH into the Droplet and deploy
-    - name: SSH into Droplet and deploy
+    - name: SSH into Droplet and deploy 
       uses: appleboy/ssh-action@v0.1.0
       with:
         host: ${{ secrets.DROPLET_IP }}
